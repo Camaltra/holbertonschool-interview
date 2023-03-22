@@ -5,11 +5,9 @@
 
 def bfs(boxes):
     """
-    Make a dfs on the boxes graph to find all possible visitable boxes
+    Make a bfs on the boxes graph to find all possible visitable boxes
     :param boxes: The list of boxes | Graph
-    :param keys: The key to process
-    :param visited_boxes: Set of all visited boxes
-    :return: Nothing, everything is done by mutating visited_boxes
+    :return: The visited boxes
     """
     visited_boxes = {0}
     queue = {key for key in boxes[0]}
@@ -22,6 +20,7 @@ def bfs(boxes):
             if key not in visited_boxes:
                 queue.add(key)
     return visited_boxes
+
 
 def canUnlockAll(boxes):
     """
