@@ -12,7 +12,7 @@ def dfs(boxes, keys, visited_boxes):
     :return: Nothing, everything is done by mutating visited_boxes
     """
     for key in keys:
-        if key in visited_boxes:
+        if key in visited_boxes or key >= len(boxes):
             continue
         visited_boxes.add(key)
         dfs(boxes, boxes[key], visited_boxes)
