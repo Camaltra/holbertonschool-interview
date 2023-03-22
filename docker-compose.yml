@@ -1,0 +1,8 @@
+version: '3.8'
+
+services:
+  interview:
+    build: .
+    container_name: interview
+    volumes:
+      - .:/app
