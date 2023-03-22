@@ -3,7 +3,7 @@
 """Useless comment"""
 
 
-def dfs(boxes, keys, visited_boxes):
+def bfs(boxes):
     """
     Make a dfs on the boxes graph to find all possible visitable boxes
     :param boxes: The list of boxes | Graph
@@ -11,12 +11,17 @@ def dfs(boxes, keys, visited_boxes):
     :param visited_boxes: Set of all visited boxes
     :return: Nothing, everything is done by mutating visited_boxes
     """
-    for key in keys:
-        if key in visited_boxes or key >= len(boxes):
+    visited_boxes = {0}
+    queue = {key for key in boxes[0]}
+    while queue:
+        current_key = queue.pop()
+        if current_key in visited_boxes or current_key >= len(boxes):
             continue
-        visited_boxes.add(key)
-        dfs(boxes, boxes[key], visited_boxes)
-
+        visited_boxes.add(current_key)
+        for key in boxes[current_key]:
+            if key not in visited_boxes:
+                queue.add(key)
+    return visited_boxes
 
 def canUnlockAll(boxes):
     """
@@ -26,7 +31,5 @@ def canUnlockAll(boxes):
     """
     if len(boxes) <= 1:
         return True
-    first_key_list = boxes[0]
-    visited_boxes = {0}
-    dfs(boxes, first_key_list, visited_boxes)
+    visited_boxes = bfs(boxes)
     return len(boxes) == len(visited_boxes)
