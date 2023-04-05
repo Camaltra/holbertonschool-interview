@@ -2,7 +2,14 @@ version: '3.8'
 
 services:
   interview-python:
-    build: .
+    build:
+      dockerfile: dockerfile.python.docker
+    container_name: interview
+    volumes:
+      - .:/app
+  interview-c:
+    build:
+      dockerfile: dockerfile.c.docker
     container_name: interview
     volumes:
       - .:/app

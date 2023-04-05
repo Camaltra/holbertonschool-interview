@@ -1,0 +1,10 @@
+FROM ubuntu:14.04
+
+WORKDIR /app
+
+COPY . .
+
+RUN apt-get upgrade
+RUN apt-get update
+RUN apt-get install valgrind -y
+RUN apt-get install gcc -y
