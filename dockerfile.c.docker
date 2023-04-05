@@ -2,9 +2,11 @@ FROM ubuntu:14.04
 
 WORKDIR /app
 
+USER root
+
 COPY . .
 
-RUN apt-get upgrade
-RUN apt-get update
-RUN apt-get install valgrind -y
-RUN apt-get install gcc -y
+RUN apt-get upgrade && apt-get update
+RUN apt-get install valgrind -y && apt-get install gcc -y && apt-get install git -y
+RUN git clone https://github.com/hs-hq/Betty.git
+RUN ./Betty/install.sh
