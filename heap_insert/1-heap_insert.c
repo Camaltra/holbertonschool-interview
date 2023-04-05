@@ -16,7 +16,7 @@ size_t binary_tree_size(const binary_tree_t *tree)
 }
 
 /**
-* getNodeFromIndex - Get a node form it's index of the heap
+* get_node_from_index - Get a node form it's index of the heap
 *
 * @root: Pointer to the root node
 * @idx: Index of a the node to search
