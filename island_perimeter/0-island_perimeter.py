@@ -82,6 +82,4 @@ def island_perimeter(grid):
         visited.add((x, y))
         perimeter += check_borders(grid, x, y, visited, to_process)
 
-    print(visited)
-
     return perimeter
