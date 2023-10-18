@@ -2,6 +2,7 @@
 
 """Useless comment ommmmg"""
 
+
 def search_island_entry(grid):
     """
     Seach the island entry (The first land, aka the first 1 cell)
