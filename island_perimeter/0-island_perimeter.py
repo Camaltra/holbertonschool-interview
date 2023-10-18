@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+"""Useless comment ommmmg"""
 
 def search_island_entry(grid):
     """
