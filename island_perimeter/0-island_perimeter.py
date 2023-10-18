@@ -30,32 +30,32 @@ def check_borders(grid, x, y, visited, to_process):
     current_edges_count = 0
     if x - 1 == -1:
         current_edges_count += 1
+    else:
+        if grid[x - 1][y] == 0:
+            current_edges_count += 1
+        elif (x - 1, y) not in visited:
+            to_process.add((x - 1, y))
     if x + 1 == len(grid):
         current_edges_count += 1
-    if y - 1 == -1:
+    else:
+        if grid[x + 1][y] == 0:
+            current_edges_count += 1
+        elif (x + 1, y) not in visited:
+            to_process.add((x + 1, y))
+    if y - 1 == - 1:
         current_edges_count += 1
-    if y + 1 == len(grid):
+    else:
+        if grid[x][y - 1] == 0:
+            current_edges_count += 1
+        elif (x, y - 1) not in visited:
+            to_process.add((x, y - 1))
+    if y + 1 == len(grid[0]):
         current_edges_count += 1
-
-    if grid[x - 1][y] == 0:
-        current_edges_count += 1
-    elif (x - 1, y) not in visited:
-        to_process.add((x - 1, y))
-
-    if grid[x + 1][y] == 0:
-        current_edges_count += 1
-    elif (x + 1, y) not in visited:
-        to_process.add((x + 1, y))
-
-    if grid[x][y - 1] == 0:
-        current_edges_count += 1
-    elif (x, y - 1) not in visited:
-        to_process.add((x, y - 1))
-
-    if grid[x][y + 1] == 0:
-        current_edges_count += 1
-    elif (x, y + 1) not in visited:
-        to_process.add((x, y + 1))
+    else:
+        if grid[x][y + 1] == 0:
+            current_edges_count += 1
+        elif (x, y + 1) not in visited:
+            to_process.add((x, y + 1))
 
     return current_edges_count
 
@@ -81,5 +81,7 @@ def island_perimeter(grid):
         x, y = to_process.pop()
         visited.add((x, y))
         perimeter += check_borders(grid, x, y, visited, to_process)
+
+    print(visited)
 
     return perimeter
