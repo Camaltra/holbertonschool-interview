@@ -10,13 +10,23 @@ def validUTF8(data):
     :param data: The data to validate
     :return: Bool
     """
-    successive_10 = 0
-    for b in data:
-        b = bin(b).replace('0b', '').rjust(8, '0')
-        if successive_10 != 0:
-            successive_10 -= 1
-            if not b.startswith('10'):
+    n_bytes = 0
+
+    m1 = 1 << 7
+    m2 = 1 << 6
+
+    for i in data:
+        m = 1 << 7
+        if n_bytes == 0:
+            while m & i:
+                n_bytes += 1
+                m = m >> 1
+            if n_bytes == 0:
+                continue
+            if n_bytes == 1 or n_bytes > 4:
                 return False
-        elif b[0] == '1':
-            successive_10 = len(b.split('0')[0]) - 1
-    return True
+        else:
+            if not (i & m1 and not (i & m2)):
+                return False
+        n_bytes -= 1
+    return n_bytes == 0
