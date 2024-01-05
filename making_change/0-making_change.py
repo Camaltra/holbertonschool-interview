@@ -1,4 +1,4 @@
-#!/usr/bin/pythton
+#!/usr/bin/python3
 
 """
 Useless
