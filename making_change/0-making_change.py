@@ -4,6 +4,7 @@
 Useless
 """
 
+
 def makeChange(coins, total):
     """
     Make the change
