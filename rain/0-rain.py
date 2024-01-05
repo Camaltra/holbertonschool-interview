@@ -14,8 +14,6 @@ def rain(walls):
 
     left_max = [walls[0]] + [max(walls[:i + 1]) for i in range(1, len(walls))]
     right_max = [max(walls[i:]) for i in range(len(walls) - 2, -1, -1)][::-1] + [walls[-1]]
-    print(left_max)
-    print(right_max)
 
     water = 0
     for i, height in enumerate(walls):
