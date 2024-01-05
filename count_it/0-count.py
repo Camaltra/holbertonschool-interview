@@ -1,58 +1,54 @@
 #!/usr/bin/python3
-""" Count it!
-"""
-from requests import request
+""" Count it """
+
+import requests
 
 
-def generate_dicts(word_list):
+def count_words(subreddit, word_list, after=None, word_count={}):
+    """ function that queries the Reddit API,
+        parses the title of all hot articles,
+        and prints a sorted count of given keywords
+        Args:
+            subreddit: subreddit supplied
+            word_list: list of keywords
+            after
     """
-    Generate dict
-    :param word_list: The list of words
-    :return: A dict
-    """
-    count = {k.lower(): 0 for k in word_list}
-    dup = {}
-    for k in word_list:
-        if k not in dup:
-            dup[k] = 0
-        dup[k] += 1
-    return count, dup
+    if after is None:
+        url = 'https://www.reddit.com/r/{}/hot.json'.format(subreddit)
+    else:
+        url = 'https://www.reddit.com/r/{}/hot.json?after={}'.format(subreddit,
+                                                                     after)
+    response = requests.get(url,
+                            headers={'User-agent': 'Holberton'},
+                            allow_redirects=False)
 
-
-def count_words(subreddit, word_list, after="", count=None, dup=None, init=0):
-    """ recursive function that queries the Reddit API
-    """
-    if count is None:
-        count = {}
-    if dup is None:
-        dup = {}
-
-    if not init:
-        count, dup = generate_dicts(word_list)
-
-    url = "https://api.reddit.com/r/{}/hot?after={}".format(subreddit, after)
-    headers = {"User-Agent": "Python3"}
-    response = request("GET", url, headers=headers).json()
-    try:
-        data = response.get('data')
-        top = data.get('children')
-        _after = data.get('after')
-
-        for item in top:
-            data = item.get('data')['title']
-            for word in count:
-                amount = data.lower().split(' ').count(word.lower())
-                count[word] += amount
-
-        if _after:
-            count_words(subreddit, word_list, _after, count, dup, 1)
-        else:
-            sort_abc = sorted(count.items(), key=lambda tup: tup[::-1])
-            desc = sorted(sort_abc, key=lambda tup: tup[1], reverse=True)
-
-            for name, cnt in desc:
-                cnt *= dup[name]
-                if cnt:
-                    print('{}: {}'.format(name.lower(), cnt))
-    except Exception:
+    if response.status_code != 200:
         return None
+
+    lower_word_list = []
+    for word in word_list:
+        lower_word_list.append(word.lower())
+
+    for word in lower_word_list:
+        if word not in word_count.keys():
+            word_count[word] = 0
+
+    hot_articles = response.json()['data']['children']
+    hot_title = []
+    for article in hot_articles:
+        hot_title = (article['data']['title'].lower().split())
+        for word in lower_word_list:
+            word_count[word] += hot_title.count(word)
+
+    after = response.json()['data']['after']
+    if after is not None:
+        return count_words(subreddit, word_list, after, word_count)
+    else:
+        sorted_word_count = sorted(
+            word_count.items(),
+            key=lambda x: -x[1]
+        )
+
+        for word in sorted_word_count:
+            if word[1] != 0:
+                print('{}: {}'.format(word[0], word[1]))
