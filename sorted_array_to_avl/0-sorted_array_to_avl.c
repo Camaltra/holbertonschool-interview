@@ -49,5 +49,5 @@ avl_t *sorted_array_to_avl(int *array, size_t size)
 	if (!size)
 		return NULL;
 
-	return (add_node(array, size, NULL);
+	return (add_node(array, size, NULL));
 }
