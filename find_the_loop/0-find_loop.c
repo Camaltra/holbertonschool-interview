@@ -23,7 +23,7 @@ listint_t *find_listint_loop(listint_t *head)
 			while (turtle && hare)
 			{
 				if (turtle == hare)
-					return (idk);
+					return (turtle);
 				turtle = turtle->next;
 				hare = hare->next;
 			}
