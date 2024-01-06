@@ -34,7 +34,7 @@ def compute_new_list(numbers, last_prime):
     """
     numbers = numbers[last_prime - 2:]
     new_numbers = []
-    for i in range(len(numbers) - 1):
+    for i in range(len(numbers)):
         if numbers[i] % last_prime != 0:
             new_numbers.append(numbers[i])
     return new_numbers
@@ -50,8 +50,11 @@ def isWinner(x, nums):
     first_player_wins = 0
     second_player_wins = 0
 
-    for up_limit in nums:
-        numbers = [i for i in range(2, up_limit + 1)]
+    if x <= 0 or x > len(nums):
+        return None
+
+    for ix_party in range(x):
+        numbers = [i for i in range(2, nums[ix_party] + 1)]
         steps = 1
         while True:
             num = get_next_prime(numbers)
