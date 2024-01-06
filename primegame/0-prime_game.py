@@ -53,7 +53,7 @@ def isWinner(x, nums):
         return None
 
     for ix_party in range(x):
-        if nums[ix_party] == 1:
+        if nums[ix_party] == 0:
             continue
         numbers = [i for i in range(1, nums[ix_party] + 1)]
         steps = 1
@@ -73,3 +73,4 @@ def isWinner(x, nums):
     if second_player_wins > first_player_wins:
         return "Ben"
     return None
+
