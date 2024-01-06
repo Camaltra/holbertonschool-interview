@@ -32,7 +32,6 @@ def compute_new_list(numbers, last_prime):
     :param last_prime: Last prime
     :return: The new list
     """
-    numbers = numbers[last_prime - 2:]
     new_numbers = []
     for i in range(len(numbers)):
         if numbers[i] % last_prime != 0:
@@ -54,6 +53,8 @@ def isWinner(x, nums):
         return None
 
     for ix_party in range(x):
+        if nums[ix_party] == 1:
+            continue
         numbers = [i for i in range(2, nums[ix_party] + 1)]
         steps = 1
         while True:
